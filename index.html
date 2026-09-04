@@ -163,8 +163,8 @@
             </div>
             <div class="w-px h-8 bg-gray-200"></div>
             <div class="flex flex-col">
-               <span class="text-xs text-gray-400 mb-1">總計（滿分 40）</span>
-               <span id="cntTotal" class="text-2xl font-bold text-purple-600">0</span>
+               <span class="text-xs text-gray-400 mb-1">線上課程簽到</span>
+               <span id="cntSport" class="text-2xl font-bold text-purple-600">0</span>
             </div>
           </div>
         </div>
@@ -322,12 +322,13 @@
           excludeContainer.classList.add('hidden');
       }
 
-      const stats = data.checkInStats || { total: 0, task: 0, diet: 0 };
+      const stats = data.checkInStats || { task: 0, diet: 0, sport: 0 };
       const taskCount = Number(stats.task) || 0;
       const dietCount = Number(stats.diet) || 0;
+      const sportCount = Number(stats.sport) || 0;
       document.getElementById('cntTask').innerText = taskCount;
       document.getElementById('cntDiet').innerText = dietCount;
-      document.getElementById('cntTotal').innerText = taskCount + dietCount;
+      document.getElementById('cntSport').innerText = sportCount;
 
       switchTab('records');
     }
