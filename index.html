@@ -323,9 +323,11 @@
       }
 
       const stats = data.checkInStats || { total: 0, task: 0, diet: 0 };
-      document.getElementById('cntTask').innerText = stats.task;
-      document.getElementById('cntDiet').innerText = stats.diet;
-      document.getElementById('cntTotal').innerText = stats.total;
+      const taskCount = Number(stats.task) || 0;
+      const dietCount = Number(stats.diet) || 0;
+      document.getElementById('cntTask').innerText = taskCount;
+      document.getElementById('cntDiet').innerText = dietCount;
+      document.getElementById('cntTotal').innerText = taskCount + dietCount;
 
       switchTab('records');
     }
