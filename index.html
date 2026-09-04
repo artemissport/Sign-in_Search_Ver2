@@ -150,20 +150,20 @@
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="bg-white p-4 rounded-xl shadow-sm text-center">
-          <p class="text-gray-500 text-xs uppercase font-bold mb-3 border-b pb-1">本月簽到統計</p>
+          <p class="text-gray-500 text-xs uppercase font-bold mb-3 border-b pb-1">本期達成天數</p>
           <div class="flex justify-between items-center px-2">
             <div class="flex flex-col">
-               <span class="text-xs text-gray-400 mb-1">每日任務簽到</span>
+               <span class="text-xs text-gray-400 mb-1">任務（目標 20 天）</span>
                <span id="cntTask" class="text-xl font-bold text-green-600">0</span>
             </div>
             <div class="w-px h-8 bg-gray-200"></div>
             <div class="flex flex-col">
-               <span class="text-xs text-gray-400 mb-1">線上課程簽到</span>
-               <span id="cntSport" class="text-xl font-bold text-pink-600">0</span>
+               <span class="text-xs text-gray-400 mb-1">飲食（目標 20 天）</span>
+               <span id="cntDiet" class="text-xl font-bold text-pink-600">0</span>
             </div>
             <div class="w-px h-8 bg-gray-200"></div>
             <div class="flex flex-col">
-               <span class="text-xs text-gray-400 mb-1">總計</span>
+               <span class="text-xs text-gray-400 mb-1">總計（滿分 40）</span>
                <span id="cntTotal" class="text-2xl font-bold text-purple-600">0</span>
             </div>
           </div>
@@ -322,9 +322,9 @@
           excludeContainer.classList.add('hidden');
       }
 
-      const stats = data.checkInStats || { total: data.checkInCount || 0, task: 0, sport: 0 };
+      const stats = data.checkInStats || { total: 0, task: 0, diet: 0 };
       document.getElementById('cntTask').innerText = stats.task;
-      document.getElementById('cntSport').innerText = stats.sport;
+      document.getElementById('cntDiet').innerText = stats.diet;
       document.getElementById('cntTotal').innerText = stats.total;
 
       switchTab('records');
