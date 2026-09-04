@@ -146,12 +146,6 @@
           </p>
         </div>
 
-        <div class="bg-pink-50 rounded-lg p-4 border border-pink-100 mt-2">
-          <p class="text-pink-800 font-medium flex items-start">
-            <i class="fa-solid fa-circle-info mt-1 mr-2 text-pink-500"></i>
-            <span id="coachTip">載入中...</span>
-          </p>
-        </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -187,9 +181,6 @@
         <button onclick="switchTab('records')" class="tab-btn active flex-shrink-0 bg-white px-6 py-2 rounded-full shadow-sm text-sm font-medium border border-gray-200 text-gray-600 hover:text-pink-600 focus:outline-none transition-all">
           <i class="fa-solid fa-list-ul mr-1"></i> 心得記錄
         </button>
-        <button onclick="switchTab('stats')" class="tab-btn flex-shrink-0 bg-white px-6 py-2 rounded-full shadow-sm text-sm font-medium border border-gray-200 text-gray-600 hover:text-pink-600 focus:outline-none transition-all">
-          <i class="fa-solid fa-chart-pie mr-1"></i> 勳章成就
-        </button>
         <button onclick="switchTab('calendar')" class="tab-btn flex-shrink-0 bg-white px-6 py-2 rounded-full shadow-sm text-sm font-medium border border-gray-200 text-gray-600 hover:text-pink-600 focus:outline-none transition-all">
           <i class="fa-regular fa-calendar-check mr-1"></i> 行事曆
         </button>
@@ -214,12 +205,6 @@
                 <p>區間：<span id="debugRange"></span></p>
               </div>
           </div>
-        </div>
-
-        <div id="view-stats" class="tab-content hidden">
-          <h3 class="font-bold text-gray-700 mb-4 border-b pb-2">我的成就與勳章</h3>
-          <div id="badgeContainer" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
-          <div id="noBadges" class="hidden text-center py-10 text-gray-400">繼續努力，勳章即將到手！</div>
         </div>
 
         <div id="view-calendar" class="tab-content hidden">
@@ -247,7 +232,7 @@
     // ============================================
     // 【重要】請確認這是您最新的 GAS Web App URL
     // ============================================
-    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwyasaaysx1c5Dpznn_xn5DMFSSolLQd_KDmcrv22PAT7YrW8H8jcpumg3UjNQ72QDu/exec";
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbxPkIg7NW84c-qBau3ZGcqZs54bsIGUh8X_WQfxNu1sUMbZjGrvG_HAdKr89YHb8ArD/exec";
 
     let currentUser = null;
     let calendarInstance = null;
@@ -337,8 +322,6 @@
           excludeContainer.classList.add('hidden');
       }
 
-      document.getElementById('coachTip').innerText = data.coachTip;
-      
       const stats = data.checkInStats || { total: data.checkInCount || 0, task: 0, sport: 0 };
       document.getElementById('cntTask').innerText = stats.task;
       document.getElementById('cntSport').innerText = stats.sport;
@@ -361,7 +344,6 @@
       document.getElementById('view-' + tabName).classList.remove('hidden');
 
       if (tabName === 'records') loadRecords();
-      if (tabName === 'stats') loadStats();
       if (tabName === 'calendar') {
           loadCalendar();
           if (calendarInstance) {
@@ -456,32 +438,6 @@
         .catch(err => {
             showContentLoader(false);
             container.innerHTML = '<div class="text-center py-4 text-red-500">資料讀取失敗</div>';
-        });
-    }
-
-    function loadStats() {
-      const container = document.getElementById('badgeContainer');
-      if (container.children.length > 0) return;
-
-      showContentLoader(true);
-      
-      fetch(`${GAS_API_URL}?op=getStats&sheetId=${currentUser.sheetId}&id=${currentUser.id}`)
-        .then(r => r.json())
-        .then(res => {
-            showContentLoader(false);
-            if (res.success && res.badges.length > 0) {
-               res.badges.forEach(b => {
-                 const card = `
-                   <div class="flex flex-col items-center p-3 bg-pink-50 rounded-lg border border-pink-100">
-                     <img src="${b.img}" alt="${b.name}" class="w-72 h-72 object-contain mb-2 drop-shadow-md" referrerpolicy="no-referrer">
-                     <span class="text-xs font-bold text-gray-600 text-center">${b.name}</span>
-                   </div>
-                 `;
-                 container.innerHTML += card;
-               });
-            } else {
-               document.getElementById('noBadges').classList.remove('hidden');
-            }
         });
     }
 
